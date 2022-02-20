@@ -16,17 +16,19 @@ const App = () => {
   },[search]);
 
   return (
-    <>
-      <div>
+    <div className="container">
         <input type="search" placeholder="Enter the location" onChange={e => {setSearch(e.target.value)}}/>
-      </div>
       {!location ? (<p>No data found</p>):(
-        <div>
-          <h2>{search}</h2>
-          <h1>{location.temp}</h1>
+        <div className="weatherDetails">
+          <h1>Location: {search}</h1>
+          <h2>Temp: {location.temp}</h2>
+          <div className="temp">
+          <p>Min temp: {location.temp_min}</p>
+          <p>Max temp: {location.temp_max}</p>
+          </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
