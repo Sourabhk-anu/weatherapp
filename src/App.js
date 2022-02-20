@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react'
 
-function App() {
+const App = () => {
+
+  const [location, setLocation] = useState(null);
+  const [search, setSearch] = useState("Mumbai");
+
+  useEffect(() => {
+    const fetchApi = async() => {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&APPID=8802d56758fd68b06737c5ddb22d1cad`;
+      const res = await fetch(url);
+      const data = await res.json();
+      setLocation(data.main);
+    };
+    fetchApi();
+  },[search]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <div>
+        <input type="search" placeholder="Enter the location" onChange={e => {setSearch(e.target.value)}}/>
+      </div>
+      {!location ? (<p>No data found</p>):(
+        <div>
+          <h2>{search}</h2>
+          <h1>{location.temp}</h1>
+        </div>
+      )}
+    </>
+  )
 }
 
-export default App;
+export default App
